@@ -1,0 +1,67 @@
+{
+    "state" : ["TN","MA","WB","Delhi"],
+    "city": ["chennai","madurai","pune","mumbai","kolkata","howrah","delhi"],
+    "region" : ["chennai1","madurai2","pune3","mumbai4"],
+    "vendor" : ["nokia","huawei","cisco","juniper"],
+    "type" : ["ip","microwave"],
+
+    "data" : {
+        "TN" : [{
+            "chennai" : ["chennai1"],
+            "madurai" : ["madurai2"]
+        }],
+        "MA" : [{
+            "pune" : ["pune3"],
+            "mumbai" : ["mumbai4"]
+        }],
+        "WB" : [{
+            "kolkata" : [],
+            "howrah" : []
+        }],
+        "Delhi" : [{
+            "delhi" : []
+        }]
+    },
+    "nodes" : [
+        {
+            "id" : 1,
+            "state" : "TN",
+            "city": "chennai",
+            "region" : "chennai1",
+            "vendor" : "nokia",
+            "type" : "ip"
+        },
+        {
+            "id" : 2,
+            "state" : "TN",
+            "city": "chennai",
+            "region" : "chennai1",
+            "vendor" : "juniper",
+            "type" : "microwave"
+        },
+        {
+            "id" : 3,
+            "state" : "TN",
+            "city": "madurai",
+            "region" : "madurai2",
+            "vendor" : "huawei",
+            "type" : "ip"
+        },
+        {
+            "id" : 4,
+            "state" : "MA",
+            "city": "pune",
+            "region" : "pune3",
+            "vendor" : "cisco",
+            "type" : "microwave"
+        }
+    ],
+
+    "links": [
+        {"source": 1, "target": 2, "value": 1},
+        {"source": 2, "target": 3, "value": 8},
+        {"source": 1, "target": 3, "value": 6},
+        {"source": 3, "target": 4, "value": 10}
+    ]
+
+}
