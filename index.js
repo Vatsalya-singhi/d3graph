@@ -268,24 +268,24 @@ function typeupdate() {
 
 function updateOnAll() {
     var item1 = document.getElementById('state');
-    var state = item1.options[item1.selectedIndex] ? item1.options[item1.selectedIndex].text : null;
+    var state = item1.options[item1.selectedIndex] ? item1.options[item1.selectedIndex].text : "All";
     var item2 = document.getElementById('city');
-    var city = item2.options[item2.selectedIndex] ? item2.options[item2.selectedIndex].text : null;
+    var city = item2.options[item2.selectedIndex] ? item2.options[item2.selectedIndex].text : "All";
     var item3 = document.getElementById('region');
-    var region = item3.options[item3.selectedIndex] ? item3.options[item3.selectedIndex].text : null;
+    var region = item3.options[item3.selectedIndex] ? item3.options[item3.selectedIndex].text : "All";
     var item4 = document.getElementById('vendor');
-    var vendor = item4.options[item4.selectedIndex] ? item4.options[item4.selectedIndex].text : null;
+    var vendor = item4.options[item4.selectedIndex] ? item4.options[item4.selectedIndex].text : "All";
     var item5 = document.getElementById('type');
-    var type = item5.options[item5.selectedIndex] ? item5.options[item5.selectedIndex].text : null;
+    var type = item5.options[item5.selectedIndex] ? item5.options[item5.selectedIndex].text : "All";
 
     console.log(vendor, type, state, city, region);
 
     var selected = node.filter(function (d, i) {
-        let flag = ((vendor != null) ? (d.vendor != vendor) : false) ||
-            ((type != null) ? (d.type != type) : false) ||
-            ((state != null) ? (d.state != state) : false) ||
-            ((city != null) ? (d.city != city) : false) ||
-            ((region != null) ? (d.region != region) : false);
+        let flag = ((vendor != "All") ? (d.vendor != vendor) : false) ||
+            ((type != "All") ? (d.type != type) : false) ||
+            ((state != "All") ? (d.state != state) : false) ||
+            ((city != "All") ? (d.city != city) : false) ||
+            ((region != "All") ? (d.region != region) : false);
 
         console.log(d, flag);
         return flag;
@@ -314,16 +314,14 @@ function addSelect(id) {
 
     var item = document.getElementById('state');
     var state = item.options[item.selectedIndex].text;
+    if (!graph.data[state] || graph.data[state] == null) {
+        return;
+    }
     let dict = graph.data[state][0];
     let cityList = Object.keys(dict);
 
     if (id == "city") {
-        for (let i = 0; i < cityList.length; i++) {
-            var option = document.createElement("option");
-            option.text = cityList[i];
-            option.value = cityList[i];
-            select.add(option);
-        }
+        addtoArray(select, cityList);
     }
     if (id == "region") {
         var item1 = document.getElementById('city');
@@ -332,19 +330,13 @@ function addSelect(id) {
         let regionList = graph.data[state][0][city]
         console.log('regionList=>', regionList);
 
-        for (let i = 0; i < regionList.length; i++) {
-            var option = document.createElement("option");
-            option.text = regionList[i];
-            option.value = regionList[i];
-            region.add(option);
-        }
+        addtoArray(region, regionList);
     }
 }
 
 
 
 function addVendorTypeState() {
-    // remove existing options
     var vendor = document.getElementById('vendor');
     var type = document.getElementById('type');
     var state = document.getElementById('state');
@@ -353,34 +345,23 @@ function addVendorTypeState() {
     let typeList = graph.type;
     let stateList = graph.state;
 
-    for (let i = 0; i < vendorList.length; i++) {
-        var option = document.createElement("option");
-        option.text = vendorList[i];
-        option.value = vendorList[i];
-        if (i == 0) {
-            option.defaultSelected = true;
-        }
-        vendor.add(option);
-    }
+    addtoArray(vendor, vendorList);
+    addtoArray(type, typeList);
+    addtoArray(state, stateList);
+}
 
-    for (let i = 0; i < typeList.length; i++) {
-        var option = document.createElement("option");
-        option.text = typeList[i];
-        option.value = typeList[i];
-        if (i == 0) {
-            option.defaultSelected = true;
-        }
-        type.add(option);
-    }
+function addtoArray(element, arrayList) {
+    let option = document.createElement("option");
+    option.text = "All";
+    option.value = "All";
+    option.defaultSelected = true;
+    element.add(option);
 
-    for (let i = 0; i < stateList.length; i++) {
-        var option = document.createElement("option");
-        option.text = stateList[i];
-        option.value = stateList[i];
-        if (i == 0) {
-            option.defaultSelected = true;
-        }
-        state.add(option);
+    for (let i = 0; i < arrayList.length; i++) {
+        let option = document.createElement("option");
+        option.text = arrayList[i];
+        option.value = arrayList[i];
+        element.add(option);
     }
 }
 
