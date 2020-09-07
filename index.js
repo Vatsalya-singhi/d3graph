@@ -3,9 +3,7 @@ var svg = d3.select("svg");
 var width = svg.node().getBoundingClientRect().width;
 var height = svg.node().getBoundingClientRect().height;
 
-// svg objects
 var link, node, texts, data;
-// the data - an object with nodes and links
 var graph;
 
 // load the data
@@ -18,9 +16,7 @@ d3.json("newdata.json", function (error, _graph) {
     addVendorTypeState();
 });
 
-//////////// FORCE SIMULATION //////////// 
 
-// force simulator
 var simulation = d3.forceSimulation();
 
 // set up the simulation and event to update locations after each tick
@@ -78,7 +74,6 @@ function updateForces() {
 }
 
 
-//////////// DISPLAY ////////////
 
 // generate the svg objects and force simulation
 function initializeDisplay() {
@@ -139,7 +134,6 @@ function ticked() {
 
 
 
-//////////// UI EVENTS ////////////
 
 function dragstarted(d) {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -333,7 +327,6 @@ function addSelect(id) {
         addtoArray(region, regionList);
     }
 }
-
 
 
 function addVendorTypeState() {
