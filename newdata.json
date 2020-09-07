@@ -15,11 +15,11 @@
             "mumbai" : ["mumbai4"]
         }],
         "WB" : [{
-            "kolkata" : [],
-            "howrah" : []
+            "kolkata" : ["kol1"],
+            "howrah" : ["howrah2"]
         }],
         "Delhi" : [{
-            "delhi" : []
+            "delhi" : ["chandnichok"]
         }]
     },
     "nodes" : [
@@ -54,14 +54,49 @@
             "region" : "pune3",
             "vendor" : "cisco",
             "type" : "microwave"
+        },
+        {
+            "id" : 5,
+            "state" : "MA",
+            "city": "mumbai",
+            "region" : "mumbai4",
+            "vendor" : "cisco",
+            "type" : "microwave"
+        },
+        {
+            "id" : 6,
+            "state" : "WB",
+            "city": "kolkata",
+            "region" : "kol1",
+            "vendor" : "cisco",
+            "type" : "ip"
+        },
+        {
+            "id" : 7,
+            "state" : "WB",
+            "city": "howrah",
+            "region" : "howrah2",
+            "vendor" : "juniper",
+            "type" : "microwave"
+        },
+        {
+            "id" : 8,
+            "state" : "Delhi",
+            "city": "delhi",
+            "region" : "chandnichok",
+            "vendor" : "juniper",
+            "type" : "microwave"
         }
     ],
 
     "links": [
         {"source": 1, "target": 2, "value": 1},
         {"source": 2, "target": 3, "value": 8},
-        {"source": 1, "target": 3, "value": 6},
-        {"source": 3, "target": 4, "value": 10}
+        {"source": 3, "target": 1, "value": 6},
+
+        {"source": 4, "target": 5, "value": 6},
+
+        {"source": 6, "target": 7, "value": 5}
     ]
 
 }

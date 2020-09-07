@@ -27,7 +27,6 @@ function initializeSimulation() {
 }
 
 
-
 // add forces to the simulation
 function initializeForces() {
     // add forces and associate each with a name
@@ -74,7 +73,6 @@ function updateForces() {
 }
 
 
-
 // generate the svg objects and force simulation
 function initializeDisplay() {
     // set the data and properties of link lines
@@ -98,7 +96,12 @@ function initializeDisplay() {
             .on("end", dragended));
     // node tooltip
     node.append("title")
-        .text(function (d) { return d.id; });
+        .text(function (d) { return 'id: '+ d.id + '\n' + 'state : '+ d.state + '\n' + 'city : ' + d.city + '\n' + 'region : '+ d.region + '\n' + 'vendor : '+ d.vendor + '\n' + 'type : '+ d.type ; });
+
+    node.append("text")
+        .attr("dx", 12)
+        .attr("dy", ".35em")
+        .text(function (d) { return d.id });
 
     // visualize the graph
     updateDisplay();
@@ -129,10 +132,6 @@ function ticked() {
         .attr("cy", function (d) { return d.y; });
     d3.select('#alpha_value').style('flex-basis', (simulation.alpha() * 100) + '%');
 }
-
-
-
-
 
 
 function dragstarted(d) {
