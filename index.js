@@ -96,7 +96,7 @@ function initializeDisplay() {
             .on("end", dragended));
     // node tooltip
     node.append("title")
-        .text(function (d) { return 'id: '+ d.id + '\n' + 'state : '+ d.state + '\n' + 'city : ' + d.city + '\n' + 'region : '+ d.region + '\n' + 'vendor : '+ d.vendor + '\n' + 'type : '+ d.type ; });
+        .text(function (d) { return 'id: ' + d.id + '\n' + 'state : ' + d.state + '\n' + 'city : ' + d.city + '\n' + 'region : ' + d.region + '\n' + 'vendor : ' + d.vendor + '\n' + 'type : ' + d.type; });
 
     node.append("text")
         .attr("dx", 12)
@@ -273,7 +273,8 @@ function updateOnAll() {
 
     console.log(vendor, type, state, city, region);
 
-    var selected = node.filter(function (d, i) {
+    let arr = [];
+    var selected = node.filter((d, i) => {
         let flag = ((vendor != "All") ? (d.vendor != vendor) : false) ||
             ((type != "All") ? (d.type != type) : false) ||
             ((state != "All") ? (d.state != state) : false) ||
@@ -281,12 +282,22 @@ function updateOnAll() {
             ((region != "All") ? (d.region != region) : false);
 
         console.log(d, flag);
+        if (!flag) {
+            arr.push(d.id);
+        }
         return flag;
     });
-
     selected.style("opacity", "0");
-    var link = svg.selectAll(".links");
-    link.style("opacity", "0");
+
+    console.log('arr=>', arr);
+    var linkages = link.filter((l, i) => {
+        return !arr.includes(l.source.id) || !arr.includes(l.target.id);
+    })
+    console.log('linkages=>', linkages);
+    linkages.style("opacity", "0");
+
+    // var linkings = svg.selectAll(".links");
+    // linkings.style("opacity", "0");
 }
 
 function removeSelect(id) {
@@ -314,7 +325,9 @@ function addSelect(id) {
     let cityList = Object.keys(dict);
 
     if (id == "city") {
-        addtoArray(select, cityList);
+        if (cityList && cityList.length > 0) {
+            addtoArray(select, cityList);
+        }
     }
     if (id == "region") {
         var item1 = document.getElementById('city');
@@ -322,8 +335,9 @@ function addSelect(id) {
         var city = item1.options[item1.selectedIndex].text;
         let regionList = graph.data[state][0][city]
         console.log('regionList=>', regionList);
-
-        addtoArray(region, regionList);
+        if (regionList && regionList.length > 0) {
+            addtoArray(region, regionList);
+        }
     }
 }
 
@@ -360,8 +374,12 @@ function addtoArray(element, arrayList) {
 function reset() {
     console.log('reset called');
     node.style("opacity", "1");
-    var link = svg.selectAll(".links");
-    link.style("opacity", "1");
+
+    var links = svg.selectAll(".links");
+    links.style("opacity", "1");
+
+    var linkages = link;
+    linkages.style("opacity", "1");
 }
 
 function circleColour(d) {
